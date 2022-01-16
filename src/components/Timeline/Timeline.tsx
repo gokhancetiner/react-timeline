@@ -11,13 +11,13 @@ type TimelineProps = {
 const Timeline = ({delay = 5000}: TimelineProps) => {
 	const [timelines, setTimelines] = useState<TimelineType[]>([])
 
-	const getNewTimeline = (timelineLength: number): TimelineType => {
+	const getNewTimeline = (): TimelineType => {
 		const now = new Date()
 		const formattedTime = `${now.getHours()}:${now.getMinutes()}:${(
 			"0" + now.getSeconds()
 		).slice(-2)}`
 
-		const timelineCount = timelineLength + 1
+		const timelineCount = timelines.length + 1
 		return {
 			time: formattedTime,
 			title: `Title ${timelineCount}`,
@@ -26,11 +26,11 @@ const Timeline = ({delay = 5000}: TimelineProps) => {
 	}
 
 	useInterval(() => {
-		setTimelines([getNewTimeline(timelines.length), ...timelines])
+		setTimelines([getNewTimeline(), ...timelines])
 	}, delay)
 
 	useEffect(() => {
-		setTimelines([getNewTimeline(timelines.length)])
+		setTimelines([getNewTimeline()])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
